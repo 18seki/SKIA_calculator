@@ -88,7 +88,7 @@
       height: 0;
       border-style: solid;
       border-width: 12px 22px 12px 0;
-      border-color: transparent #84898B transparent transparent;
+      border-color: transparent #A0A0A0 transparent transparent;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -97,7 +97,7 @@
 
     .arrow-button:last-child:before {
       border-width: 12px 0 12px 22px;
-      border-color: transparent transparent transparent #84898B;
+      border-color: transparent transparent transparent #A0A0A0;
     }
 
     .level-input-container input {
@@ -125,6 +125,40 @@
       font-size: 25px;
       padding: 0;
       position: relative;
+    }
+
+    .opt-button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .opt-button {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      margin-left: 7px;
+      margin-right: 7px;
+      display: inline-block;
+      padding: 10px;
+      font-size: 15px;
+      cursor: pointer;
+      border: 2px solid #B0B0B0;
+      background-color: #F4F4F4;
+      color: #84898B;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .opt-button:hover {
+      background-color: #B0B0B0;
+      color: #fff;
+    }
+
+    .opt-button-on {
+      background-color: #A8A8A8;
+      border: 2px solid #A0A0A0;
+      color: #fff;
+      font-size: 16px;
     }
 
     #result {
@@ -167,9 +201,16 @@
 
       const n = parseInt(document.getElementById('nInput').value);
       const k = parseInt(document.getElementById('kInput').value);
-      const comparison = document.getElementById('comparison').value;
-
       let probability;
+
+      let comparison;
+      if (document.getElementById('button0').classList.contains('opt-button-on')) {
+        comparison = 'larger';
+      } else if (document.getElementById('button1').classList.contains('opt-button-on')) {
+        comparison = 'equal';
+      } else if (document.getElementById('button2').classList.contains('opt-button-on')) {
+        comparison = 'less';
+      }
 
       switch (comparison) {
         case 'equal':
@@ -233,8 +274,24 @@
       calculateProbability()
     }
 
+    function toggleButton(button) {
+      if (currentButton !== button) {
+        if (currentButton) {
+          currentButton.classList.remove('opt-button-on');
+        }
+        currentButton = button;
+        currentButton.classList.add('opt-button-on');
+        calculateProbability();
+      }
+    }
+
     let domN, domK;
+    let currentButton;
     document.addEventListener('DOMContentLoaded', function() {
+
+      currentButton = document.getElementById('button0');
+      currentButton.classList.add('opt-button-on');
+
       domN = document.getElementById('nInput');
       domK = document.getElementById('kInput');
       domN.focus();
@@ -291,6 +348,13 @@
     window.addEventListener('keydown', handleEnterKey);
 
   </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q4E4Q63ZWN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-Q4E4Q63ZWN');
+  </script>
 </head>
 <body>
   <h2>세븐나이츠 키우기<br>픽업 소환 확률 계산기</h2>
@@ -308,17 +372,18 @@
 
   <div class="count-input-container">
   <button class="target-button" onclick="adjustCount('decrement')">-</button>
-  <input type="number" id="kInput" min="0" placeholder="획득 횟수" required style="width: 80px;">
+  <input type="number" id="kInput" value="1" min="0" placeholder="획득 횟수" required style="width: 80px;">
   <button class="target-button" onclick="adjustCount('increment')">+</button>
   </div>
 
   <br>
 
-  <select id="comparison">
-    <option value="larger">이상</option>
-    <option value="equal">정확히</option>
-    <option value="less">이하</option>
-  </select>
+  <div class="opt-button-group">
+    <button id="button0" class="opt-button" onclick="toggleButton(this)">이상</button>
+    <button id="button1" class="opt-button" onclick="toggleButton(this)">정확히</button>
+    <button id="button2" class="opt-button" onclick="toggleButton(this)">이하</button>
+  </div>
+
   <label>획득할 확률</label>
 
   <br>
