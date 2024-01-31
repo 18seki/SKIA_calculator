@@ -163,7 +163,7 @@
 
     #result {
       margin-top: 20px;
-      font-size: 20px;
+      font-size: 24px;
       color: #333;
     }
 
@@ -173,26 +173,6 @@
   </style>
 
   <script>
-
-    let userLanguage = navigator.language || navigator.userLanguage;
-
-    if (!userLanguage.startsWith('ko')) {
-      document.getElementById('pageTitle').innerHTML = 'Seven Knights Idle Adventure<br>Rate-up summon probability calculator';
-      document.getElementById('label_levelInput').innerHTML = "Summon Level";
-      document.getElementById('nInput').placeholder = "Total attempts";
-      document.getElementById('kInput').placeholder = "Acquisitions";
-      document.getElementById('button0').innerHTML = "or more";
-      document.getElementById('button1').innerHTML = "equal to";
-      document.getElementById('button2').innerHTML = "or less";
-      document.getElementById('label_tgt_prob').innerHTML = "Probability following above";
-      document.getElementById('button_calculate').innerHTML = "Calculate";
-    }
-
-    if (userLanguage.startsWith('ja')) {
-      document.getElementById('pageTitle').innerHTML = 'セブンナイツ ポケット<br>ピックアップ召喚 確率計算機';
-      document.getElementById('label_levelInput').innerHTML = "召喚レベル";
-    }
-
     function calculateProbability() {
 
       const level = parseInt(document.getElementById('levelInput').value);
@@ -377,14 +357,14 @@
   </script>
 </head>
 <body>
-  <h2 id="pageTitle">세븐나이츠 키우기<br>픽업 소환 확률 계산기</h2>
+  <h2>세븐나이츠 키우기<br>픽업 소환 확률 계산기</h2>
 
   <div class="level-input-container">
     <button class="arrow-button" onclick="adjustLevel('decrement')"></button>
     <input type="number" id="levelInput" value="10" min="6" max="10">
     <button class="arrow-button" onclick="adjustLevel('increment')"></button>
   </div>
-  <label id="label_levelInput" for="levelInput" class="level-input-label">소환 레벨</label>
+  <label for="levelInput" class="level-input-label">소환 레벨</label>
 
   <br>
 
@@ -404,11 +384,11 @@
     <button id="button2" class="opt-button" onclick="toggleButton(this)">이하</button>
   </div>
 
-  <label id="label_tgt_prob">획득할 확률</label>
+  <label>획득할 확률</label>
 
   <br>
 
-  <button id="button_calculate" onclick="calculateProbability()">계산</button>
+  <button onclick="calculateProbability()">계산</button>
 
   <div id="result"></div>
 </body>
